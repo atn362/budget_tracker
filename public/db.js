@@ -1,11 +1,10 @@
 let db;
-let budgetVersion;
+let budget;
 
 // Create a new db request for a "budget" database.
-const request = indexedDB.open('BudgetDB', budgetVersion || 21);
+const request = indexedDB.open('budget', budget || 1);
 
 request.onupgradeneeded = function (e) {
-  console.log('Upgrade needed in IndexDB');
 
   const { oldVersion } = e;
   const newVersion = e.newVersion || db.version;
@@ -15,7 +14,7 @@ request.onupgradeneeded = function (e) {
   db = e.target.result;
 
   if (db.objectStoreNames.length === 0) {
-    db.createObjectStore('BudgetStore', { autoIncrement: true });
+    db.createObjectStore('budget', { autoIncrement: true });
   }
 };
 
@@ -24,13 +23,12 @@ request.onerror = function (e) {
 };
 
 function checkDatabase() {
-  console.log('check db invoked');
 
-  // Open a transaction on your BudgetStore db
-  let transaction = db.transaction(['BudgetStore'], 'readwrite');
+  // Open a transaction on your budget db
+  let transaction = db.transaction(['budget'], 'readwrite');
 
-  // access your BudgetStore object
-  const store = transaction.objectStore('BudgetStore');
+  // access your budget object
+  const store = transaction.objectStore('budget');
 
   // Get all records from store and set to a variable
   const getAll = store.getAll();
@@ -51,15 +49,14 @@ function checkDatabase() {
         .then((res) => {
           // If our returned response is not empty
           if (res.length !== 0) {
-            // Open another transaction to BudgetStore with the ability to read and write
-            transaction = db.transaction(['BudgetStore'], 'readwrite');
+            // Open another transaction to budget with the ability to read and write
+            transaction = db.transaction(['budget'], 'readwrite');
 
             // Assign the current store to a variable
-            const currentStore = transaction.objectStore('BudgetStore');
+            const currentStore = transaction.objectStore('budget');
 
             // Clear existing entries because our bulk add was successful
             currentStore.clear();
-            console.log('Clearing store 🧹');
           }
         });
     }
@@ -72,18 +69,17 @@ request.onsuccess = function (e) {
 
   // Check if app is online before reading from db
   if (navigator.onLine) {
-    console.log('Backend online! 🗄️');
     checkDatabase();
   }
 };
 
 const saveRecord = (record) => {
   console.log('Save record invoked');
-  // Create a transaction on the BudgetStore db with readwrite access
-  const transaction = db.transaction(['BudgetStore'], 'readwrite');
+  // Create a transaction on the budget db with readwrite access
+  const transaction = db.transaction(['budget'], 'readwrite');
 
-  // Access your BudgetStore object store
-  const store = transaction.objectStore('BudgetStore');
+  // Access your budget object store
+  const store = transaction.objectStore('budget');
 
   // Add record to your store with add method.
   store.add(record);
@@ -91,3 +87,5 @@ const saveRecord = (record) => {
 
 // Listen for app coming back online
 window.addEventListener('online', checkDatabase);
+
+
