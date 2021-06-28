@@ -22,6 +22,7 @@ This application is used to track a budget using the MONGOdb atlas online as wel
 
 ![terminal](https://user-images.githubusercontent.com/77468756/123670260-a255d380-d802-11eb-8708-c9b286825ad0.png)
 ![localhost](https://user-images.githubusercontent.com/77468756/123670366-c31e2900-d802-11eb-8fc0-f6946dc51e7c.png)
+![deployed](https://user-images.githubusercontent.com/77468756/123670510-e9dc5f80-d802-11eb-8656-b226f9b34343.png)
 
 
 
