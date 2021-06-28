@@ -48,10 +48,10 @@ function checkDatabase() {
             // Open another transaction to budget with the ability to read and write
             transaction = db.transaction(['budget'], 'readwrite');
 
-            // Assign the current store to a variable
+            // Assign the current store variable
             const currentStore = transaction.objectStore('budget');
 
-            // Clear existing entries because our bulk add was successful
+            // Clear entries
             currentStore.clear();
           }
         });
